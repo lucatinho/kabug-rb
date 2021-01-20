@@ -1,14 +1,14 @@
 pipeline {
     agent {
         docker {
-            image "qaninja/rubywd"
+            image 'qaninja/rubywd'
         }
     }
     
     stages {
         stage('Build') {
             steps {
-                echo 'Building or Resolve Depencies!'
+                echo 'Building or Resolve Dependencies!'
                 sh 'rm -f Gemfile.lock'
                 sh 'bundle install'
             }
@@ -19,7 +19,7 @@ pipeline {
                 sh 'bundle exec cucumber -p ci'
             }
             post {
-                always{
+                always {
                     cucumber failedFeaturesNumber: -1, failedScenariosNumber: -1, failedStepsNumber: -1, fileIncludePattern: '**/*.json', jsonReportDirectory: 'logs', pendingStepsNumber: -1, skippedStepsNumber: -1, sortingMethod: 'ALPHABETICAL', undefinedStepsNumber: -1
                 }
             }
@@ -32,7 +32,7 @@ pipeline {
         }
         stage('Prod') {
             steps {
-                echo 'WebApp is Ready'
+                echo 'WebApp is Ready :)'
             }
         }
     }
